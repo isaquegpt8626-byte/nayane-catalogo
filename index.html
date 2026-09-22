@@ -102,7 +102,7 @@ nav a.active{background:var(--panel-2);color:var(--brown)}
 /* ---------- Services ---------- */
 .services{background:var(--bg-light);border-block:1px solid var(--line)}
 .srv-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:20px}
-.srv{background:var(--white);border:1px solid var(--line);border-radius:var(--radius);padding:24px;transition:.3s;position:relative;overflow:hidden}
+.srv{background:var(--white);border:1px solid var(--line);border-radius:var(--radius);padding:24px;transition:.3s;position:relative;overflow:hidden;display:flex;flex-direction:column}
 .srv:hover{transform:translateY(-5px);box-shadow:var(--shadow);border-color:var(--gold-light)}
 .srv h3{font-family:'Playfair Display',serif;font-size:1.28rem;margin-bottom:8px;padding-right:40px}
 .srv .price-badge{position:absolute;top:22px;right:22px;font-family:'Playfair Display',serif;font-weight:700;color:var(--gold);font-size:1.05rem;white-space:nowrap}
@@ -116,7 +116,7 @@ nav a.active{background:var(--panel-2);color:var(--brown)}
 .free-tag{background:#e8f0e6;color:#4a6b45;padding:3px 10px;border-radius:999px;font-size:.74rem;font-weight:600;display:inline-block;margin-top:10px}
 
 /* ---------- Pré-agendamento ---------- */
-.book-form{margin-top:16px;display:grid;gap:10px}
+.book-form{margin-top:auto;padding-top:16px;display:grid;gap:10px}
 .book-opts{display:flex;gap:10px;flex-wrap:wrap}
 .book-opts label{display:flex;flex-direction:column;gap:4px;font-size:.7rem;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:var(--muted)}
 .book-opts select{font-family:'Montserrat',sans-serif;font-size:.85rem;font-weight:500;color:var(--brown);background:var(--white);border:1px solid var(--line);border-radius:10px;padding:8px 10px;cursor:pointer;min-width:130px}
@@ -389,9 +389,9 @@ footer .copy{font-size:.8rem;color:rgba(233,220,201,.6);margin-top:18px}
         </div>
       </article>
 
-      <article class="srv reveal" data-srv="Spa dos Pés">
+      <article class="srv reveal" data-srv="Plástica dos Pés">
         <span class="price-badge">R$ 70</span>
-        <h3>Spa dos Pés</h3>
+        <h3>Plástica dos Pés</h3>
         <p class="desc">Cuidado completo para seus pés, com higienização, esfoliação, hidratação e massagem relaxante, proporcionando bem-estar e leveza.</p>
         <div class="meta">
           <span class="chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>Duração: 1h30 a 2h</span>
