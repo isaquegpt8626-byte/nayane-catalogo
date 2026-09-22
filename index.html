@@ -261,7 +261,7 @@ footer .copy{font-size:.8rem;color:rgba(233,220,201,.6);margin-top:18px}
     <div class="sec-head reveal">
       <p class="eyebrow">Mais que unhas, a sua melhor versão</p>
       <h2>Nossos Serviços</h2>
-      <p>Todos os procedimentos com produtos de qualidade, biossegurança e acabamento impecável. Clique em cada item para ampliar a arte original.</p>
+      <p>Todos os procedimentos com produtos de qualidade, biossegurança e acabamento impecável.</p>
     </div>
     <div class="srv-grid">
 
@@ -349,10 +349,6 @@ footer .copy{font-size:.8rem;color:rgba(233,220,201,.6);margin-top:18px}
       </article>
 
     </div>
-    <div class="figure reveal" style="margin-top:30px;max-width:640px;margin-left:auto;margin-right:auto">
-      <img src="4.png" alt="Cartaz de serviços e preços" class="zoomable" loading="lazy">
-    </div>
-    <p class="art-note">Toque na imagem para ampliar</p>
   </div>
 </section>
 
@@ -386,10 +382,6 @@ footer .copy{font-size:.8rem;color:rgba(233,220,201,.6);margin-top:18px}
         <p>Ponta reta com cantos definidos. Prática, resistente e clean.</p>
       </div>
     </div>
-    <div class="figure reveal" style="max-width:640px;margin:0 auto">
-      <img src="5.png" alt="Formatos de unhas: Stileto, Bailarina, Amendoada e Quadrada" class="zoomable" loading="lazy">
-    </div>
-    <p class="art-note">Toque na imagem para ampliar</p>
   </div>
 </section>
 
@@ -413,9 +405,6 @@ footer .copy{font-size:.8rem;color:rgba(233,220,201,.6);margin-top:18px}
         <span class="ic">&#128136;</span>
         <div><h3>Higienização e esterilização</h3><p>Todos os materiais utilizados passam por higienização e esterilização adequada, além do uso de itens descartáveis quando necessário.</p></div>
       </div>
-    </div>
-    <div class="figure reveal" style="max-width:520px;margin:30px auto 0">
-      <img src="3.png" alt="Higiene e segurança" class="zoomable" loading="lazy">
     </div>
   </div>
 </section>
@@ -454,9 +443,6 @@ footer .copy{font-size:.8rem;color:rgba(233,220,201,.6);margin-top:18px}
         </div>
       </div>
     </div>
-    <div class="figure reveal" style="max-width:520px;margin:30px auto 0">
-      <img src="2.png" alt="Regras de atendimento" class="zoomable" loading="lazy">
-    </div>
   </div>
 </section>
 
@@ -483,9 +469,6 @@ footer .copy{font-size:.8rem;color:rgba(233,220,201,.6);margin-top:18px}
           <a class="btn btn-primary" style="padding:12px 20px" href="https://wa.me/5588996281302" target="_blank" rel="noopener">Chamar no WhatsApp</a>
         </div>
       </div>
-    </div>
-    <div class="figure reveal" style="max-width:520px;margin:30px auto 0">
-      <img src="6.png" alt="Formas de pagamento e localização" class="zoomable" loading="lazy">
     </div>
   </div>
 </section>
@@ -558,12 +541,11 @@ document.getElementById('lbClose').addEventListener('click',closeLb);
 lb.addEventListener('click',e=>{if(e.target===lb)closeLb();});
 document.addEventListener('keydown',e=>{if(e.key==='Escape')closeLb();});
 
-// ----- Formats: abrir arte ao clicar -----
+// ----- Formats: feedback visual ao clicar -----
 document.querySelectorAll('.fmt').forEach(f=>{
   f.addEventListener('click',()=>{
-    const img=document.querySelector('#formatos img.zoomable');
-    lbImg.src=img.src;lbCap.textContent=f.dataset.formato;lb.classList.add('open');
-    document.body.style.overflow='hidden';
+    f.style.transform='scale(1.04)';
+    setTimeout(()=>f.style.transform='',220);
   });
 });
 
