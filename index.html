@@ -115,6 +115,15 @@ nav a.active{background:var(--panel-2);color:var(--brown)}
 .extra-row b{color:var(--brown)}
 .free-tag{background:#e8f0e6;color:#4a6b45;padding:3px 10px;border-radius:999px;font-size:.74rem;font-weight:600;display:inline-block;margin-top:10px}
 
+/* ---------- Pré-agendamento ---------- */
+.book-form{margin-top:16px;display:grid;gap:10px}
+.book-opts{display:flex;gap:10px;flex-wrap:wrap}
+.book-opts label{display:flex;flex-direction:column;gap:4px;font-size:.7rem;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:var(--muted)}
+.book-opts select{font-family:'Montserrat',sans-serif;font-size:.85rem;font-weight:500;color:var(--brown);background:var(--white);border:1px solid var(--line);border-radius:10px;padding:8px 10px;cursor:pointer;min-width:130px}
+.btn-wa{display:inline-flex;align-items:center;justify-content:center;gap:9px;width:100%;padding:12px 20px;border-radius:999px;background:#25d366;color:#fff;font-family:'Montserrat',sans-serif;font-weight:600;font-size:.9rem;cursor:pointer;border:none;box-shadow:0 10px 24px -10px rgba(37,211,102,.7);transition:.28s}
+.btn-wa svg{width:18px;height:18px;fill:#fff;flex:0 0 18px}
+.btn-wa:hover{transform:translateY(-2px);background:#1ebe5c}
+
 /* ---------- Formats ---------- */
 .fmt-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:20px;margin-bottom:36px}
 .fmt{background:var(--white);border:1px solid var(--line);border-radius:var(--radius);padding:28px 22px;text-align:center;cursor:pointer;transition:.3s}
@@ -265,7 +274,7 @@ footer .copy{font-size:.8rem;color:rgba(233,220,201,.6);margin-top:18px}
     </div>
     <div class="srv-grid">
 
-      <article class="srv reveal">
+      <article class="srv reveal" data-srv="Alongamento Gel">
         <span class="price-badge">a partir R$ 95</span>
         <h3>Alongamento Gel</h3>
         <p class="desc">Unhas mais longas, resistentes e com acabamento natural, do jeito que você sempre quis.</p>
@@ -282,18 +291,32 @@ footer .copy{font-size:.8rem;color:rgba(233,220,201,.6);margin-top:18px}
           <div class="extra-row"><span>Decorada</span><b>R$ 90</b></div>
           <div class="extra-row"><span>Encapsulada</span><b>R$ 100</b></div>
         </div>
+        <div class="book-form" data-book>
+          <div class="book-opts">
+            <label>Modalidade
+              <select data-opt><option value="Aplicação">Aplicação</option><option value="Manutenção">Manutenção</option></select>
+            </label>
+            <label>Tipo
+              <select data-opt><option value="Simples">Simples</option><option value="Decorada">Decorada</option><option value="Encapsulada">Encapsulada</option></select>
+            </label>
+          </div>
+          <button type="button" class="btn-wa"><svg viewBox="0 0 32 32"><path d="M16 3C9.4 3 4 8.4 4 15c0 2.1.6 4.1 1.6 5.9L4 29l8.3-1.5c1.1.6 2.4.9 3.7.9 6.6 0 12-5.4 12-12S22.6 3 16 3zm0 21.8c-1.2 0-2.4-.3-3.4-.9l-.6-.3-4.9.9.9-4.7-.4-.6A9.7 9.7 0 015.2 15c0-5.3 4.4-9.6 9.8-9.6s9.8 4.3 9.8 9.6-4.4 9.6-9.8 9.6zm5.4-7.2c-.3-.1-1.7-.9-2-1s-.5-.1-.7.1c-.2.3-.8 1-.9 1.2-.2.2-.3.2-.6.1-.3-.1-1.2-.5-2.3-1.4-.9-.8-1.5-1.7-1.6-2-.2-.3 0-.5.1-.6l.4-.5c.1-.2.2-.3.3-.5.1-.2 0-.4 0-.5 0-.1-.7-1.6-.9-2.2-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.5s1.1 2.9 1.2 3.1c.1.2 2.1 3.3 5.1 4.6.7.3 1.3.5 1.7.6.7.2 1.4.2 1.9.1.6-.1 1.7-.7 2-1.4.2-.7.2-1.2.2-1.4-.1-.1-.3-.2-.6-.3z"/></svg>Pré-agendar pelo WhatsApp</button>
+        </div>
       </article>
 
-      <article class="srv reveal">
+      <article class="srv reveal" data-srv="Banho de Gel">
         <span class="price-badge">R$ 65</span>
         <h3>Banho de Gel</h3>
         <p class="desc">Mais resistência e brilho para suas unhas naturais, com um acabamento impecável.</p>
         <div class="meta">
           <span class="chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>Tempo médio 1h30 a 2h</span>
         </div>
+        <div class="book-form" data-book>
+          <button type="button" class="btn-wa"><svg viewBox="0 0 32 32"><path d="M16 3C9.4 3 4 8.4 4 15c0 2.1.6 4.1 1.6 5.9L4 29l8.3-1.5c1.1.6 2.4.9 3.7.9 6.6 0 12-5.4 12-12S22.6 3 16 3zm0 21.8c-1.2 0-2.4-.3-3.4-.9l-.6-.3-4.9.9.9-4.7-.4-.6A9.7 9.7 0 015.2 15c0-5.3 4.4-9.6 9.8-9.6s9.8 4.3 9.8 9.6-4.4 9.6-9.8 9.6zm5.4-7.2c-.3-.1-1.7-.9-2-1s-.5-.1-.7.1c-.2.3-.8 1-.9 1.2-.2.2-.3.2-.6.1-.3-.1-1.2-.5-2.3-1.4-.9-.8-1.5-1.7-1.6-2-.2-.3 0-.5.1-.6l.4-.5c.1-.2.2-.3.3-.5.1-.2 0-.4 0-.5 0-.1-.7-1.6-.9-2.2-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.5s1.1 2.9 1.2 3.1c.1.2 2.1 3.3 5.1 4.6.7.3 1.3.5 1.7.6.7.2 1.4.2 1.9.1.6-.1 1.7-.7 2-1.4.2-.7.2-1.2.2-1.4-.1-.1-.3-.2-.6-.3z"/></svg>Pré-agendar pelo WhatsApp</button>
+        </div>
       </article>
 
-      <article class="srv reveal">
+      <article class="srv reveal" data-srv="Blindagem">
         <span class="price-badge">R$ 50</span>
         <h3>Blindagem</h3>
         <p class="desc">Fortalece e protege suas unhas naturais, ideal para quem quer unhas mais firmes e saudáveis.</p>
@@ -301,50 +324,68 @@ footer .copy{font-size:.8rem;color:rgba(233,220,201,.6);margin-top:18px}
           <span class="chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>Tempo médio 1h a 1h30</span>
         </div>
         <span class="free-tag">Esmaltação gratuita (opcional)</span>
+        <div class="book-form" data-book>
+          <button type="button" class="btn-wa"><svg viewBox="0 0 32 32"><path d="M16 3C9.4 3 4 8.4 4 15c0 2.1.6 4.1 1.6 5.9L4 29l8.3-1.5c1.1.6 2.4.9 3.7.9 6.6 0 12-5.4 12-12S22.6 3 16 3zm0 21.8c-1.2 0-2.4-.3-3.4-.9l-.6-.3-4.9.9.9-4.7-.4-.6A9.7 9.7 0 015.2 15c0-5.3 4.4-9.6 9.8-9.6s9.8 4.3 9.8 9.6-4.4 9.6-9.8 9.6zm5.4-7.2c-.3-.1-1.7-.9-2-1s-.5-.1-.7.1c-.2.3-.8 1-.9 1.2-.2.2-.3.2-.6.1-.3-.1-1.2-.5-2.3-1.4-.9-.8-1.5-1.7-1.6-2-.2-.3 0-.5.1-.6l.4-.5c.1-.2.2-.3.3-.5.1-.2 0-.4 0-.5 0-.1-.7-1.6-.9-2.2-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.5s1.1 2.9 1.2 3.1c.1.2 2.1 3.3 5.1 4.6.7.3 1.3.5 1.7.6.7.2 1.4.2 1.9.1.6-.1 1.7-.7 2-1.4.2-.7.2-1.2.2-1.4-.1-.1-.3-.2-.6-.3z"/></svg>Pré-agendar pelo WhatsApp</button>
+        </div>
       </article>
 
-      <article class="srv reveal">
+      <article class="srv reveal" data-srv="Portiça Realista">
         <span class="price-badge">R$ 50</span>
         <h3>Portiça Realista</h3>
         <p class="desc">Beleza e praticidade com um resultado natural e sofisticado.</p>
         <div class="meta">
           <span class="chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>Tempo médio 1h30 a 2h</span>
         </div>
+        <div class="book-form" data-book>
+          <button type="button" class="btn-wa"><svg viewBox="0 0 32 32"><path d="M16 3C9.4 3 4 8.4 4 15c0 2.1.6 4.1 1.6 5.9L4 29l8.3-1.5c1.1.6 2.4.9 3.7.9 6.6 0 12-5.4 12-12S22.6 3 16 3zm0 21.8c-1.2 0-2.4-.3-3.4-.9l-.6-.3-4.9.9.9-4.7-.4-.6A9.7 9.7 0 015.2 15c0-5.3 4.4-9.6 9.8-9.6s9.8 4.3 9.8 9.6-4.4 9.6-9.8 9.6zm5.4-7.2c-.3-.1-1.7-.9-2-1s-.5-.1-.7.1c-.2.3-.8 1-.9 1.2-.2.2-.3.2-.6.1-.3-.1-1.2-.5-2.3-1.4-.9-.8-1.5-1.7-1.6-2-.2-.3 0-.5.1-.6l.4-.5c.1-.2.2-.3.3-.5.1-.2 0-.4 0-.5 0-.1-.7-1.6-.9-2.2-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.5s1.1 2.9 1.2 3.1c.1.2 2.1 3.3 5.1 4.6.7.3 1.3.5 1.7.6.7.2 1.4.2 1.9.1.6-.1 1.7-.7 2-1.4.2-.7.2-1.2.2-1.4-.1-.1-.3-.2-.6-.3z"/></svg>Pré-agendar pelo WhatsApp</button>
+        </div>
       </article>
 
-      <article class="srv reveal">
+      <article class="srv reveal" data-srv="Esmaltação em Gel">
         <span class="price-badge">R$ 60</span>
         <h3>Esmaltação em Gel</h3>
         <p class="desc">Mais durabilidade, brilho e cores incríveis para suas unhas.</p>
         <div class="meta">
           <span class="chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>Tempo médio 1h a 1h30</span>
         </div>
+        <div class="book-form" data-book>
+          <button type="button" class="btn-wa"><svg viewBox="0 0 32 32"><path d="M16 3C9.4 3 4 8.4 4 15c0 2.1.6 4.1 1.6 5.9L4 29l8.3-1.5c1.1.6 2.4.9 3.7.9 6.6 0 12-5.4 12-12S22.6 3 16 3zm0 21.8c-1.2 0-2.4-.3-3.4-.9l-.6-.3-4.9.9.9-4.7-.4-.6A9.7 9.7 0 015.2 15c0-5.3 4.4-9.6 9.8-9.6s9.8 4.3 9.8 9.6-4.4 9.6-9.8 9.6zm5.4-7.2c-.3-.1-1.7-.9-2-1s-.5-.1-.7.1c-.2.3-.8 1-.9 1.2-.2.2-.3.2-.6.1-.3-.1-1.2-.5-2.3-1.4-.9-.8-1.5-1.7-1.6-2-.2-.3 0-.5.1-.6l.4-.5c.1-.2.2-.3.3-.5.1-.2 0-.4 0-.5 0-.1-.7-1.6-.9-2.2-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.5s1.1 2.9 1.2 3.1c.1.2 2.1 3.3 5.1 4.6.7.3 1.3.5 1.7.6.7.2 1.4.2 1.9.1.6-.1 1.7-.7 2-1.4.2-.7.2-1.2.2-1.4-.1-.1-.3-.2-.6-.3z"/></svg>Pré-agendar pelo WhatsApp</button>
+        </div>
       </article>
 
-      <article class="srv reveal">
+      <article class="srv reveal" data-srv="Manicure">
         <span class="price-badge">R$ 30</span>
         <h3>Manicure</h3>
         <p class="desc">Cuidado e beleza para o seu dia a dia.</p>
         <div class="meta">
           <span class="chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>Tempo médio 1h</span>
         </div>
+        <div class="book-form" data-book>
+          <button type="button" class="btn-wa"><svg viewBox="0 0 32 32"><path d="M16 3C9.4 3 4 8.4 4 15c0 2.1.6 4.1 1.6 5.9L4 29l8.3-1.5c1.1.6 2.4.9 3.7.9 6.6 0 12-5.4 12-12S22.6 3 16 3zm0 21.8c-1.2 0-2.4-.3-3.4-.9l-.6-.3-4.9.9.9-4.7-.4-.6A9.7 9.7 0 015.2 15c0-5.3 4.4-9.6 9.8-9.6s9.8 4.3 9.8 9.6-4.4 9.6-9.8 9.6zm5.4-7.2c-.3-.1-1.7-.9-2-1s-.5-.1-.7.1c-.2.3-.8 1-.9 1.2-.2.2-.3.2-.6.1-.3-.1-1.2-.5-2.3-1.4-.9-.8-1.5-1.7-1.6-2-.2-.3 0-.5.1-.6l.4-.5c.1-.2.2-.3.3-.5.1-.2 0-.4 0-.5 0-.1-.7-1.6-.9-2.2-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.5s1.1 2.9 1.2 3.1c.1.2 2.1 3.3 5.1 4.6.7.3 1.3.5 1.7.6.7.2 1.4.2 1.9.1.6-.1 1.7-.7 2-1.4.2-.7.2-1.2.2-1.4-.1-.1-.3-.2-.6-.3z"/></svg>Pré-agendar pelo WhatsApp</button>
+        </div>
       </article>
 
-      <article class="srv reveal">
+      <article class="srv reveal" data-srv="Pedicure">
         <span class="price-badge">R$ 35</span>
         <h3>Pedicure</h3>
         <p class="desc">Pés bem cuidados, bonitos e saudáveis.</p>
         <div class="meta">
           <span class="chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>Tempo médio 1h a 1h30</span>
         </div>
+        <div class="book-form" data-book>
+          <button type="button" class="btn-wa"><svg viewBox="0 0 32 32"><path d="M16 3C9.4 3 4 8.4 4 15c0 2.1.6 4.1 1.6 5.9L4 29l8.3-1.5c1.1.6 2.4.9 3.7.9 6.6 0 12-5.4 12-12S22.6 3 16 3zm0 21.8c-1.2 0-2.4-.3-3.4-.9l-.6-.3-4.9.9.9-4.7-.4-.6A9.7 9.7 0 015.2 15c0-5.3 4.4-9.6 9.8-9.6s9.8 4.3 9.8 9.6-4.4 9.6-9.8 9.6zm5.4-7.2c-.3-.1-1.7-.9-2-1s-.5-.1-.7.1c-.2.3-.8 1-.9 1.2-.2.2-.3.2-.6.1-.3-.1-1.2-.5-2.3-1.4-.9-.8-1.5-1.7-1.6-2-.2-.3 0-.5.1-.6l.4-.5c.1-.2.2-.3.3-.5.1-.2 0-.4 0-.5 0-.1-.7-1.6-.9-2.2-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.5s1.1 2.9 1.2 3.1c.1.2 2.1 3.3 5.1 4.6.7.3 1.3.5 1.7.6.7.2 1.4.2 1.9.1.6-.1 1.7-.7 2-1.4.2-.7.2-1.2.2-1.4-.1-.1-.3-.2-.6-.3z"/></svg>Pré-agendar pelo WhatsApp</button>
+        </div>
       </article>
 
-      <article class="srv reveal">
+      <article class="srv reveal" data-srv="Remoção + Manicure">
         <span class="price-badge">R$ 50</span>
         <h3>Remoção + Manicure</h3>
         <p class="desc">Remoção segura do alongamento ou gel, finalizando com manicure.</p>
         <div class="meta">
           <span class="chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>Tempo médio 1h a 1h30</span>
+        </div>
+        <div class="book-form" data-book>
+          <button type="button" class="btn-wa"><svg viewBox="0 0 32 32"><path d="M16 3C9.4 3 4 8.4 4 15c0 2.1.6 4.1 1.6 5.9L4 29l8.3-1.5c1.1.6 2.4.9 3.7.9 6.6 0 12-5.4 12-12S22.6 3 16 3zm0 21.8c-1.2 0-2.4-.3-3.4-.9l-.6-.3-4.9.9.9-4.7-.4-.6A9.7 9.7 0 015.2 15c0-5.3 4.4-9.6 9.8-9.6s9.8 4.3 9.8 9.6-4.4 9.6-9.8 9.6zm5.4-7.2c-.3-.1-1.7-.9-2-1s-.5-.1-.7.1c-.2.3-.8 1-.9 1.2-.2.2-.3.2-.6.1-.3-.1-1.2-.5-2.3-1.4-.9-.8-1.5-1.7-1.6-2-.2-.3 0-.5.1-.6l.4-.5c.1-.2.2-.3.3-.5.1-.2 0-.4 0-.5 0-.1-.7-1.6-.9-2.2-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.5s1.1 2.9 1.2 3.1c.1.2 2.1 3.3 5.1 4.6.7.3 1.3.5 1.7.6.7.2 1.4.2 1.9.1.6-.1 1.7-.7 2-1.4.2-.7.2-1.2.2-1.4-.1-.1-.3-.2-.6-.3z"/></svg>Pré-agendar pelo WhatsApp</button>
         </div>
       </article>
 
@@ -555,6 +596,20 @@ window.addEventListener('scroll',()=>{
   toTop.classList.toggle('show',window.scrollY>600);
 });
 toTop.addEventListener('click',()=>window.scrollTo({top:0,behavior:'smooth'}));
+
+// ----- Pré-agendamento pelo WhatsApp -----
+const WA_NUMBER='5588996281302';
+document.querySelectorAll('[data-book]').forEach(form=>{
+  const card=form.closest('.srv');
+  const svc=card.getAttribute('data-srv');
+  form.querySelector('.btn-wa').addEventListener('click',()=>{
+    const opts=[...form.querySelectorAll('select[data-opt]')].map(s=>s.value);
+    let msg=`Olá, Nayane! 💅\n\nGostaria de realizar um pré-agendamento para o serviço de *${svc}`;
+    if(opts.length){msg+=` (${opts.join(' / ')})`;}
+    msg+=`.\n\nVocê poderia me informar quais datas e horários estão disponíveis?\n\nObrigada!`;
+    window.open(`https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(msg)}`,'_blank','noopener');
+  });
+});
 </script>
 </body>
 </html>
