@@ -18,7 +18,7 @@ Implemente a funcionalidade de pré-agendamento diretamente nos cards de serviç
 
    Obrigada!
 
-4. Para **Alongamento Gel**, permitir selecionar previamente a modalidade (**Aplicação** ou **Manutenção**) e o tipo (**Simples**, **Decorada** ou **Encapsulada**). Incluir as opções escolhidas automaticamente na mensagem.
+4. Para **Alongamento Gel**, permitir selecionar previamente a modalidade (**Aplicação** ou **Manutenção**) e o tipo (**Simples**, **Decorada** ou **Encapsulada**). Para **Banho de Gel**, permitir selecionar previamente a modalidade (**Aplicação** ou **Manutenção**). Incluir as opções escolhidas automaticamente na mensagem.
 5. Preservar o layout, as fontes, as cores, os valores, as descrições e a identidade visual atual do catálogo.
 6. Garantir o funcionamento do botão em computadores, tablets e celulares.
 7. Abrir o WhatsApp em uma nova aba, mantendo o catálogo aberto.
