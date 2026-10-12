@@ -28,18 +28,29 @@ Catálogo de vendas com visual igual ao site principal e botão **"Comprar pelo 
 - **Backup**: "Baixar products.js (backup)" gera cópia dos produtos atuais; o `products.js` no repo serve só de fallback caso o Firebase falhe.
 
 ### Infraestrutura (Firebase)
-- Projeto: **naydesign** · Firestore em modo de produção.
+- Projeto: **naydesign** · Firestore em modo de produção · Authentication (e-mail/senha) habilitada.
 - Configuração do app web: arquivo `firebase-config.js` (apiKey pública do app).
+- **Login da Área do Lojista**: o `admin.html` pede e-mail + senha antes de mostrar o painel.
+  - Conta única: `nayanecardoso221@gmail.com` (senha definida pela lojista; "Esqueci minha senha" envia e-mail de redefinição para ela mesma).
+  - No 1º acesso, a lojista clica em **"Criar minha conta (1º acesso)"** com esse e-mail; depois usa apenas **"Entrar"**.
+  - Botão **Sair** no menu. A sessão fica salva no aparelho (login persistente), então os acessos seguintes abrem direto logada.
 - **Regras necessárias** (aba *Regras* do Firestore — publicar):
   ```
   rules_version = '2';
   service cloud.firestore {
     match /databases/{database}/documents {
-      match /{document=**} { allow read, write: if true; }
+      match /produtos/{doc} {
+        allow read: if true;
+        allow write: if auth != null;
+      }
+      match /config/{doc} {
+        allow read: if true;
+        allow write: if auth != null;
+      }
     }
   }
   ```
-  ⚠️ Regras abertas = qualquer pessoa que acesse a URL pode escrever. Enquanto o site é público e pessoal, funciona; para endurecer depois, use Authentication do Firebase.
+  ⚠️ Com essas regras, **clientes leem a loja livremente**, mas só quem está logada escreve (cadastrar/editar produto, WhatsApp). Até publicar essas regras, as regras antigas abertas continuam valendo.
 - Coleção usada: `produtos` (docs com `nome`, `detalhe`, `preco`, `estoque`, `img`). Documento `config/loja` guarda o `whatsapp`.
 
 - O link **Produtos** já está disponível no menu do site principal (`index.html`).

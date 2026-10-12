@@ -102,6 +102,27 @@ nav a.active{background:var(--panel-2);color:var(--brown)}
 .count-badge{font-size:.78rem;font-weight:600;color:var(--muted)}
 .empty-list{color:var(--muted);font-size:.88rem;text-align:center;padding:20px 0}
 
+/* ---------- Login gate ---------- */
+.gate{position:fixed;inset:0;z-index:120;background:var(--bg);
+  background-image:radial-gradient(circle at 15% 20%,rgba(176,141,87,.08),transparent 40%),
+                   radial-gradient(circle at 85% 80%,rgba(176,141,87,.08),transparent 40%);
+  overflow:auto;display:flex;align-items:center;justify-content:center;padding:24px}
+.gate.hidden{display:none}
+.gate-card{width:min(400px,100%);background:var(--white);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);padding:30px 28px;text-align:center}
+.gate-brand{font-family:'Great Vibes',cursive;font-size:2.1rem;color:var(--gold);line-height:1;margin-bottom:4px}
+.gate-sub{font-size:.75rem;letter-spacing:3px;text-transform:uppercase;color:var(--muted);font-weight:600;margin-bottom:22px}
+.gate .field{margin-bottom:14px}
+.gate label{text-align:left;display:block;margin-bottom:6px;font-size:.72rem;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:var(--muted)}
+.gate input{width:100%;font-family:'Montserrat',sans-serif;font-size:.95rem;color:var(--brown);background:var(--bg-light);border:1px solid var(--line);border-radius:12px;padding:13px 14px}
+.gate input:focus{outline:2px solid var(--gold-light);border-color:var(--gold)}
+.gate-btns{display:flex;flex-direction:column;gap:10px;margin-top:6px}
+.gate-msg{margin-top:14px;font-size:.84rem;min-height:1.2em}
+.gate-msg.err{color:#a24a38;background:#f6e3de;border-radius:10px;padding:10px 12px}
+.gate-msg.ok{color:#4a6b45;background:#e8f0e6;border-radius:10px;padding:10px 12px}
+.gate-link{margin-top:10px;font-size:.8rem;background:none;border:none;color:var(--gold);cursor:pointer;font-family:'Montserrat',sans-serif;font-weight:600}
+.gate-foot{margin-top:18px;font-size:.74rem;color:var(--muted)}
+#logoutBtn{background:none;border:none;font-family:'Montserrat',sans-serif;font-size:.86rem;font-weight:600;color:#a24a38;cursor:pointer;padding:8px 12px}
+
 /* ---------- Footer ---------- */
 footer{background:var(--brown);color:#e9dcc9;text-align:center;padding:30px 0;margin-top:20px}
 footer .copy{font-size:.8rem;color:rgba(233,220,201,.6)}
@@ -115,6 +136,29 @@ footer .copy{font-size:.8rem;color:rgba(233,220,201,.6)}
 </head>
 <body>
 
+<!-- ===== LOGIN (acesso restrito) ===== -->
+<div class="gate" id="loginGate">
+  <div class="gate-card">
+    <p class="gate-brand">Nayane</p>
+    <p class="gate-sub">Área do Lojista</p>
+    <div class="field">
+      <label for="lgEmail">E-mail</label>
+      <input type="email" id="lgEmail" autocomplete="username" placeholder="seu@email.com" inputmode="email">
+    </div>
+    <div class="field">
+      <label for="lgSenha">Senha</label>
+      <input type="password" id="lgSenha" autocomplete="current-password" placeholder="Sua senha">
+    </div>
+    <div class="gate-btns">
+      <button type="button" class="btn btn-primary" id="lgEnter" style="justify-content:center">Entrar</button>
+      <button type="button" class="btn btn-gold" id="lgCreate" style="justify-content:center">Criar minha conta (1&ordm; acesso)</button>
+    </div>
+    <button type="button" class="gate-link" id="lgForgot">Esqueci minha senha</button>
+    <p class="gate-msg" id="lgMsg"></p>
+    <p class="gate-foot">Acesso restrito. A loja continua aberta para os clientes no menu <b>Loja</b>.</p>
+  </div>
+</div>
+
 <!-- ===== NAV ===== -->
 <header class="nav">
   <div class="wrap nav-inner">
@@ -124,6 +168,7 @@ footer .copy{font-size:.8rem;color:rgba(233,220,201,.6)}
         <li><a href="index.html">Início</a></li>
         <li><a href="produtos.html">Loja</a></li>
         <li><a href="admin.html" class="active">Área do Lojista</a></li>
+        <li><button type="button" id="logoutBtn" style="display:none">Sair</button></li>
       </ul>
     </nav>
   </div>
@@ -236,13 +281,16 @@ setTimeout(function(){
 </script>
 <script type="module">
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js';
+import { getAuth, onAuthStateChanged, signInWithEmailAndPassword, createUserWithEmailAndPassword, sendPasswordResetEmail, signOut } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js';
 import { getFirestore, collection, doc, onSnapshot, addDoc, updateDoc, deleteDoc, setDoc, increment } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js';
 
 const WA_KEY='nayane_whatsapp_v1';
+const ADMIN_EMAIL='nayanecardoso221@gmail.com'; // único e-mail com acesso ao painel
 const fmtPreco=v=>new Intl.NumberFormat('pt-BR',{style:'currency',currency:'BRL'}).format(v);
 const esc=s=>String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 
 let db=null;
+let auth=null;
 let remoteList=[];      // produtos vindos do Firestore (atualiza em tempo real)
 let editingId=null;
 let imgData='';
@@ -251,6 +299,23 @@ try{
   if(typeof FIREBASE_CONFIG==='undefined')throw new Error('Firebase não carregou. Se você abriu um arquivo .html baixado (ex.: pelo WhatsApp) em vez do site, abra este endereço no navegador: isaquegpt8626-byte.github.io/nayane-catalogo/admin.html');
   const app=initializeApp(FIREBASE_CONFIG);
   db=getFirestore(app);
+  auth=getAuth(app);
+  onAuthStateChanged(auth,user=>{
+    const gateEl=document.getElementById('loginGate');
+    const outBtn=document.getElementById('logoutBtn');
+    if(user){
+      if((user.email||'').toLowerCase()===ADMIN_EMAIL){
+        gateEl.classList.add('hidden');
+        outBtn.style.display='inline-flex';
+      }else{
+        setGateMsg('Este e-mail não tem acesso ao painel. Saindo…','err');
+        setTimeout(()=>signOut(auth).catch(()=>{}),1600);
+      }
+    }else{
+      gateEl.classList.remove('hidden');
+      outBtn.style.display='none';
+    }
+  });
   onSnapshot(collection(db,'produtos'),snap=>{
     remoteList=snap.docs.map(d=>({id:d.id,...d.data()}));
     renderList();
@@ -266,6 +331,49 @@ try{
   console.error('Firebase init:',err);
   if(window.showFBError)window.showFBError(err.message||'Firebase não carregou. Recarregue a página.');
 }
+
+// ----- Login -----
+const lgEmail=document.getElementById('lgEmail'),lgSenha=document.getElementById('lgSenha');
+function setGateMsg(t,type){const m=document.getElementById('lgMsg');m.textContent=t||'';m.className='gate-msg'+(type?' '+type:'');}
+function mapAuthErr(err){
+  switch(err&&err.code){
+    case 'auth/user-not-found':
+    case 'auth/invalid-credential':
+    case 'auth/wrong-password':return 'E-mail ou senha incorretos. Se for seu primeiro acesso, use "Criar minha conta".';
+    case 'auth/email-already-in-use':return 'Esta conta já existe — use "Entrar".';
+    case 'auth/weak-password':return 'Senha muito curta (mínimo 6 caracteres).';
+    case 'auth/too-many-requests':return 'Muitas tentativas. Aguarde alguns minutos e tente de novo.';
+    case 'auth/network-request-failed':return 'Sem internet agora. Verifique a conexão e tente novamente.';
+    default:return 'Não consegui: '+(err&&err.message?err.message:'erro inesperado.');
+  }
+}
+document.getElementById('lgEnter').addEventListener('click',async()=>{
+  if(!auth){setGateMsg('Firebase não carregou. Recarregue a página pelo endereço do site.','err');return;}
+  const email=lgEmail.value.trim(),senha=lgSenha.value;
+  if(!email||!senha){setGateMsg('Preencha e-mail e senha.','err');return;}
+  setGateMsg('Entrando…');
+  try{await signInWithEmailAndPassword(auth,email,senha);setGateMsg('');}
+  catch(err){console.error(err);setGateMsg(mapAuthErr(err),'err');}
+});
+document.getElementById('lgCreate').addEventListener('click',async()=>{
+  if(!auth){setGateMsg('Firebase não carregou. Recarregue a página pelo endereço do site.','err');return;}
+  const email=lgEmail.value.trim(),senha=lgSenha.value;
+  if(email.toLowerCase()!==ADMIN_EMAIL){setGateMsg('Só o e-mail oficial da Nayane pode criar a conta. Se a conta já existe, use "Entrar".','err');return;}
+  if(senha.length<6){setGateMsg('A senha precisa ter pelo menos 6 caracteres.','err');return;}
+  setGateMsg('Criando conta…');
+  try{await createUserWithEmailAndPassword(auth,email,senha);setGateMsg('Conta criada! Entrando…','ok');}
+  catch(err){console.error(err);setGateMsg(mapAuthErr(err),'err');}
+});
+document.getElementById('lgForgot').addEventListener('click',async()=>{
+  if(!auth){setGateMsg('Firebase não carregou. Recarregue a página pelo endereço do site.','err');return;}
+  const email=(lgEmail.value.trim()||ADMIN_EMAIL).toLowerCase();
+  if(email!==ADMIN_EMAIL){setGateMsg('Digite o seu e-mail no campo acima para receber o link de redefinição.','err');return;}
+  try{await sendPasswordResetEmail(auth,email);setGateMsg('Enviei um e-mail de redefinição para '+email+'. Confira também o spam.','ok');}
+  catch(err){console.error(err);setGateMsg(mapAuthErr(err),'err');}
+});
+document.getElementById('logoutBtn').addEventListener('click',async()=>{
+  if(auth)await signOut(auth).catch(()=>{});
+});
 
 function getWA(){
   return ((document.getElementById('waInput').value||localStorage.getItem(WA_KEY)||(typeof CATALOGO!=='undefined'?CATALOGO.whatsapp:'')||'5588996281302').replace(/\D/g,''));
