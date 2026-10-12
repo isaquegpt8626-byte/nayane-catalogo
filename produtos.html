@@ -287,8 +287,8 @@ function render(items){
 render(((typeof CATALOGO!=='undefined'&&CATALOGO.produtos)||[]).map((p,i)=>({...p,id:p.id||('seed'+i)})));
 
 try{
-  if(!window.FIREBASE_CONFIG)throw new Error('O arquivo firebase-config.js não está no site. Publique/envie esse arquivo junto com as outras páginas e recarregue.');
-  const app=initializeApp(window.FIREBASE_CONFIG);
+  if(typeof FIREBASE_CONFIG==='undefined')throw new Error('O arquivo firebase-config.js não está no site. Publique/envie esse arquivo junto com as outras páginas e recarregue.');
+  const app=initializeApp(FIREBASE_CONFIG);
   const db=getFirestore(app);
   window.__LOJA__={};
   onSnapshot(collection(db,'produtos'),snap=>{
