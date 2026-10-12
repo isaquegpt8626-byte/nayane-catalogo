@@ -248,7 +248,7 @@ let editingId=null;
 let imgData='';
 
 try{
-  if(typeof FIREBASE_CONFIG==='undefined')throw new Error('O arquivo firebase-config.js não está no site. Publique/envie esse arquivo junto com as outras páginas e recarregue.');
+  if(typeof FIREBASE_CONFIG==='undefined')throw new Error('Firebase não carregou. Se você abriu um arquivo .html baixado (ex.: pelo WhatsApp) em vez do site, abra este endereço no navegador: isaquegpt8626-byte.github.io/nayane-catalogo/admin.html');
   const app=initializeApp(FIREBASE_CONFIG);
   db=getFirestore(app);
   onSnapshot(collection(db,'produtos'),snap=>{
