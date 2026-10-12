@@ -327,6 +327,10 @@ try{
   onSnapshot(doc(db,'config','loja'),s=>{
     if(s.exists()&&s.data().whatsapp){waInput.value=String(s.data().whatsapp).replace(/\D/g,'');}
   },()=>{});
+  // Se a conta da lojista já foi criada, esconde o botão "Criar minha conta" em todos os aparelhos
+  onSnapshot(doc(db,'config','conta'),s=>{
+    if(s.exists())document.getElementById('lgCreate').style.display='none';
+  },()=>{});
 }catch(err){
   console.error('Firebase init:',err);
   if(window.showFBError)window.showFBError(err.message||'Firebase não carregou. Recarregue a página.');
@@ -361,8 +365,18 @@ document.getElementById('lgCreate').addEventListener('click',async()=>{
   if(email.toLowerCase()!==ADMIN_EMAIL){setGateMsg('Só o e-mail oficial da Nayane pode criar a conta. Se a conta já existe, use "Entrar".','err');return;}
   if(senha.length<6){setGateMsg('A senha precisa ter pelo menos 6 caracteres.','err');return;}
   setGateMsg('Criando conta…');
-  try{await createUserWithEmailAndPassword(auth,email,senha);setGateMsg('Conta criada! Entrando…','ok');}
-  catch(err){console.error(err);setGateMsg(mapAuthErr(err),'err');}
+  try{
+    await createUserWithEmailAndPassword(auth,email,senha);
+    setGateMsg('Conta criada! Entrando…','ok');
+    // marca no banco que a conta já existe (esconde o botão de criar nos outros aparelhos)
+    if(db)await setDoc(doc(db,'config','conta'),{criadaEm:new Date().toISOString()},{merge:true}).catch(e=>console.warn('flag conta:',e));
+    document.getElementById('lgCreate').style.display='none';
+  }
+  catch(err){
+    console.error(err);
+    if(err.code==='auth/email-already-in-use'){setGateMsg('Esta conta já existe — use "Entrar".','err');document.getElementById('lgCreate').style.display='none';}
+    else setGateMsg(mapAuthErr(err),'err');
+  }
 });
 document.getElementById('lgForgot').addEventListener('click',async()=>{
   if(!auth){setGateMsg('Firebase não carregou. Recarregue a página pelo endereço do site.','err');return;}
