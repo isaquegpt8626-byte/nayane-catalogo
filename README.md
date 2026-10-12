@@ -32,7 +32,7 @@ Catálogo de vendas com visual igual ao site principal e botão **"Comprar pelo 
 - Configuração do app web: arquivo `firebase-config.js` (apiKey pública do app).
 - **Login da Área do Lojista**: o `admin.html` pede e-mail + senha antes de mostrar o painel.
   - Conta única: `nayanecardoso221@gmail.com` (senha definida pela lojista; "Esqueci minha senha" envia e-mail de redefinição para ela mesma).
-  - No 1º acesso, a lojista clica em **"Criar minha conta (1º acesso)"** com esse e-mail; depois usa apenas **"Entrar"**.
+  - No 1º acesso, a lojista clica em **"Criar minha conta (1º acesso)"** com esse e-mail e define a senha. Depois disso o botão **some automaticamente em todos os aparelhos** (o site verifica na autenticação se a conta já existe), então o acesso passa a ser só por **"Entrar"**.
   - Botão **Sair** no menu. A sessão fica salva no aparelho (login persistente), então os acessos seguintes abrem direto logada.
 - **Regras necessárias** (aba *Regras* do Firestore — publicar):
   ```
