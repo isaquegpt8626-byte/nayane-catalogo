@@ -15,6 +15,35 @@ Catálogo interativo para hospedagem no GitHub Pages.
 - **Endereço**: nas seções de localização, substitua `Rua (tal), Setor (tal)` e `Studio (tal)`.
 - **Redes sociais**: no rodapé, troque os `href="#"` pelos links do Instagram/WhatsApp.
 
+## Loja de produtos (página `produtos.html`)
+
+Catálogo de vendas com visual igual ao site principal e botão **"Comprar pelo WhatsApp"** em cada card. Os dados ficam no **Firebase Firestore** (projeto `naydesign`), então **tudo atualiza em tempo real** — sem publicar nada de novo no GitHub.
+
+### Como funciona
+- **Cadastrar produtos**: abra `admin.html` (link "Área do Lojista" no rodapé) e preencha nome, detalhe, valor, estoque e foto. O produto aparece na hora na loja, para qualquer aparelho.
+- **Vendeu? Baixe o estoque**: no painel, clique no botão **Vendido −1** do produto. O estoque cai automaticamente para todos os clientes (e a loja mostra "Últimas X un." até esgotar).
+- **Estoque**: `0` deixa o card com selo "Esgotado" e botão desabilitado; estoque ≤ 4 mostra "Últimas X un."
+- **Trocar o número da loja**: no painel, campo "WhatsApp da loja" → salvar (fica no Firestore + navegador).
+- **Apagar todos os produtos**: botão vermelho no rodapé da lista (não desfaz).
+- **Backup**: "Baixar products.js (backup)" gera cópia dos produtos atuais; o `products.js` no repo serve só de fallback caso o Firebase falhe.
+
+### Infraestrutura (Firebase)
+- Projeto: **naydesign** · Firestore em modo de produção.
+- Configuração do app web: arquivo `firebase-config.js` (apiKey pública do app).
+- **Regras necessárias** (aba *Regras* do Firestore — publicar):
+  ```
+  rules_version = '2';
+  service cloud.firestore {
+    match /databases/{database}/documents {
+      match /{document=**} { allow read, write: if true; }
+    }
+  }
+  ```
+  ⚠️ Regras abertas = qualquer pessoa que acesse a URL pode escrever. Enquanto o site é público e pessoal, funciona; para endurecer depois, use Authentication do Firebase.
+- Coleção usada: `produtos` (docs com `nome`, `detalhe`, `preco`, `estoque`, `img`). Documento `config/loja` guarda o `whatsapp`.
+
+- O link **Produtos** já está disponível no menu do site principal (`index.html`).
+
 ## Recursos interativos incluídos
 
 - Navegação fixa com destaque da seção ativa

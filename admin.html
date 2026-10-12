@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nayane Cardoso · Área do Lojista</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>&#10084;</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Montserrat:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f7efe4;
+  --bg-light:#fbf6ee;
+  --panel:#f2e6d6;
+  --panel-2:#efe0cc;
+  --brown:#3a2a1e;
+  --brown-soft:#5a4433;
+  --muted:#8a7260;
+  --gold:#b08d57;
+  --gold-light:#cbb189;
+  --line:#d8c3a5;
+  --white:#fffdf9;
+  --shadow:0 18px 40px -20px rgba(58,42,30,.35);
+  --radius:18px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{
+  font-family:'Montserrat',sans-serif;
+  color:var(--brown);
+  background:var(--bg);
+  line-height:1.65;
+  background-image:radial-gradient(circle at 15% 20%,rgba(176,141,87,.06),transparent 40%),
+                   radial-gradient(circle at 85% 80%,rgba(176,141,87,.06),transparent 40%);
+}
+img{max-width:100%;display:block}
+a{color:inherit;text-decoration:none}
+.wrap{width:min(880px,92%);margin:0 auto}
+section{padding:40px 0 70px;position:relative}
+
+/* ---------- Nav ---------- */
+header.nav{
+  position:sticky;top:0;z-index:60;
+  backdrop-filter:saturate(150%) blur(8px);
+  background:rgba(247,239,228,.82);
+  border-bottom:1px solid rgba(216,195,165,.6);
+}
+.nav-inner{display:flex;align-items:center;justify-content:space-between;height:66px}
+.brand{font-family:'Playfair Display',serif;font-size:1.15rem;font-weight:600;letter-spacing:.5px;display:flex;align-items:center;gap:8px}
+.brand b{color:var(--gold)}
+nav ul{display:flex;gap:6px;list-style:none;align-items:center}
+nav a{padding:8px 12px;border-radius:999px;font-size:.86rem;font-weight:500;color:var(--brown-soft);transition:.25s}
+nav a:hover{color:var(--brown)}
+nav a.active{background:var(--panel-2);color:var(--brown)}
+
+/* ---------- Head ---------- */
+.head{text-align:center;padding:36px 0 10px}
+.eyebrow{letter-spacing:4px;font-size:.78rem;text-transform:uppercase;color:var(--muted);font-weight:600}
+.head h1{font-family:'Playfair Display',serif;font-size:clamp(1.8rem,5vw,2.6rem);font-weight:700;margin-top:6px}
+.head p{color:var(--muted);max-width:560px;margin:10px auto 0;font-size:.92rem}
+
+/* ---------- Cards ---------- */
+.card{background:var(--white);border:1px solid var(--line);border-radius:var(--radius);padding:26px;margin-bottom:24px;box-shadow:var(--shadow)}
+.card h2{font-family:'Playfair Display',serif;font-size:1.35rem;margin-bottom:6px}
+.card .hint{font-size:.84rem;color:var(--muted);margin-bottom:18px}
+
+/* ---------- Form ---------- */
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.field{display:flex;flex-direction:column;gap:6px}
+.field.full{grid-column:1/-1}
+.field label{font-size:.72rem;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:var(--muted)}
+.field input[type=text],.field input[type=number],.field input[type=file]{
+  font-family:'Montserrat',sans-serif;font-size:.95rem;color:var(--brown);
+  background:var(--bg-light);border:1px solid var(--line);border-radius:12px;padding:12px 14px;width:100%;
+}
+.field input:focus{outline:2px solid var(--gold-light);border-color:var(--gold)}
+.img-row{display:flex;gap:16px;align-items:flex-start}
+.img-preview{width:96px;height:96px;flex:0 0 96px;border-radius:12px;border:1px dashed var(--line);background:var(--panel);display:grid;place-items:center;overflow:hidden;font-size:.68rem;color:var(--muted);text-align:center;padding:6px}
+.img-preview img{width:100%;height:100%;object-fit:cover}
+.btn{display:inline-flex;align-items:center;gap:9px;padding:13px 24px;border-radius:999px;font-family:'Montserrat',sans-serif;font-weight:600;font-size:.9rem;cursor:pointer;border:1px solid transparent;transition:.28s}
+.btn-primary{background:var(--brown);color:#fff;box-shadow:var(--shadow)}
+.btn-primary:hover{transform:translateY(-2px);background:#2c1f15}
+.btn-gold{background:var(--gold);color:#fff}
+.btn-gold:hover{transform:translateY(-2px);background:#9b7a48}
+.btn-ghost{border-color:var(--line);color:var(--brown-soft);background:transparent}
+.btn-ghost:hover{background:var(--panel)}
+.btn-danger{border-color:#d9b1a8;color:#a24a38;background:transparent}
+.btn-danger:hover{background:#f6e3de}
+.btn-sm{padding:8px 16px;font-size:.8rem}
+.form-actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:20px}
+.saved-toast{display:none;margin-top:14px;background:#e8f0e6;color:#4a6b45;border-radius:12px;padding:10px 16px;font-size:.85rem;font-weight:600}
+.saved-toast.show{display:block}
+
+/* ---------- List ---------- */
+.prod-list{display:flex;flex-direction:column;gap:12px}
+.prod-row{display:flex;gap:14px;align-items:center;border:1px solid var(--line);border-radius:14px;padding:12px;background:var(--bg-light)}
+.prod-row .thumb{width:64px;height:64px;flex:0 0 64px;border-radius:10px;object-fit:cover;background:var(--panel)}
+.prod-row .meta{flex:1;min-width:0}
+.prod-row .meta b{font-size:.92rem;display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.prod-row .meta span{font-size:.78rem;color:var(--muted);display:block}
+.prod-row .acts{display:flex;gap:8px;flex:0 0 auto}
+.count-badge{font-size:.78rem;font-weight:600;color:var(--muted)}
+.empty-list{color:var(--muted);font-size:.88rem;text-align:center;padding:20px 0}
+
+/* ---------- Footer ---------- */
+footer{background:var(--brown);color:#e9dcc9;text-align:center;padding:30px 0;margin-top:20px}
+footer .copy{font-size:.8rem;color:rgba(233,220,201,.6)}
+
+@media(max-width:640px){
+  .form-grid{grid-template-columns:1fr}
+  .prod-row{flex-wrap:wrap}
+  .prod-row .acts{width:100%;justify-content:flex-end}
+}
+</style>
+</head>
+<body>
+
+<!-- ===== NAV ===== -->
+<header class="nav">
+  <div class="wrap nav-inner">
+    <a href="index.html" class="brand">Nayane<b>Cardoso</b></a>
+    <nav>
+      <ul>
+        <li><a href="index.html">Início</a></li>
+        <li><a href="produtos.html">Loja</a></li>
+        <li><a href="admin.html" class="active">Área do Lojista</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<section>
+  <div class="wrap">
+    <div class="head">
+      <p class="eyebrow">Painel de gestão</p>
+      <h1>Área do Lojista</h1>
+      <p>Cadastre produtos com valor, estoque e foto. Tudo fica salvo na nuvem (Firebase) e <b>atualiza na hora para todos os clientes</b>, de qualquer aparelho — sem baixar arquivo nem republicar. Depois de cada venda, use o botão <b>Vendido −1</b>.</p>
+    </div>
+
+    <!-- Configuração -->
+    <div class="card">
+      <h2>Configuração da loja</h2>
+      <p class="hint">Número usado nos botões "Comprar" (formato: 55 + DDD + número, só dígitos).</p>
+      <div class="form-grid">
+        <div class="field full">
+          <label for="waInput">WhatsApp da loja</label>
+          <input type="text" id="waInput" inputmode="numeric" placeholder="5588996281302">
+        </div>
+      </div>
+      <div class="form-actions" style="margin-top:14px">
+        <button type="button" class="btn btn-ghost btn-sm" id="saveWa">Salvar número</button>
+      </div>
+    </div>
+
+    <!-- Cadastro -->
+    <div class="card">
+      <h2 id="formTitle">Cadastrar produto</h2>
+      <p class="hint">A foto é redimensionada automaticamente e fica guardada junto ao produto.</p>
+      <form id="prodForm" novalidate>
+        <div class="form-grid">
+          <div class="field full">
+            <label for="pNome">Nome do produto *</label>
+            <input type="text" id="pNome" required maxlength="90" placeholder="Ex.: GOS300 – Adesivo para unha">
+          </div>
+          <div class="field full">
+            <label for="pDetalhe">Detalhe (opcional)</label>
+            <input type="text" id="pDetalhe" maxlength="60" placeholder="Ex.: Box com 12 unidades">
+          </div>
+          <div class="field">
+            <label for="pPreco">Valor (R$) *</label>
+            <input type="number" id="pPreco" step="0.01" min="0" required placeholder="26,00">
+          </div>
+          <div class="field">
+            <label for="pEstoque">Estoque *</label>
+            <input type="number" id="pEstoque" step="1" min="0" required placeholder="12">
+          </div>
+          <div class="field full">
+            <label>Foto do produto</label>
+            <div class="img-row">
+              <div class="img-preview" id="imgPreview">sem<br>foto</div>
+              <div style="display:flex;flex-direction:column;gap:8px;flex:1">
+                <input type="file" id="pImg" accept="image/*">
+                <button type="button" class="btn btn-ghost btn-sm" id="removeImg" style="align-self:flex-start">Remover foto</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="form-actions">
+          <button type="submit" class="btn btn-primary" id="submitBtn">Salvar produto</button>
+          <button type="button" class="btn btn-ghost" id="cancelEdit" style="display:none">Cancelar edição</button>
+        </div>
+        <p class="saved-toast" id="toast"></p>
+      </form>
+    </div>
+
+    <!-- Lista -->
+    <div class="card">
+      <h2>Produtos cadastrados <span class="count-badge" id="countBadge"></span></h2>
+      <p class="hint">Edite ou remova abaixo. Use <b>Vendido −1</b> a cada venda para baixar o estoque automaticamente.</p>
+      <div class="prod-list" id="prodList"></div>
+      <div class="form-actions" style="margin-top:22px">
+        <button type="button" class="btn btn-gold" id="downloadJs">&#11015;&nbsp; Baixar products.js (backup)</button>
+        <a class="btn btn-ghost" href="produtos.html">Ver loja</a>
+        <button type="button" class="btn btn-danger" id="clearAll">Apagar todos os produtos</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <p class="copy">Nayane Cardoso · Nail Designer · Área do Lojista</p>
+  </div>
+</footer>
+
+<!-- Configuração base (fallback offline) e Firebase -->
+<script src="products.js"></script>
+<script src="firebase-config.js"></script>
+<!-- Monitor de conexão Firebase -->
+<script>
+window.__FB_OK__=false;
+window.showFBError=function(msg){
+  window.__FB_ERR_SHOWN__=true;
+  var b=document.getElementById('connBanner');
+  if(!b){b=document.createElement('p');b.id='connBanner';b.style.cssText='display:none;background:#f6e3de;color:#a24a38;padding:12px 16px;border-radius:10px;margin-bottom:18px;font-weight:600;text-align:center';var h=document.querySelector('.head');if(h)h.appendChild(b);}
+  b.textContent=msg;b.style.display='block';
+};
+window.hideFBError=function(){
+  window.__FB_OK__=true;
+  var b=document.getElementById('connBanner');if(b)b.style.display='none';
+};
+setTimeout(function(){
+  if(window.__FB_OK__||window.__FB_ERR_SHOWN__)return;
+  window.showFBError('Firebase não carregou. Verifique sua internet e se o arquivo firebase-config.js está publicado no site (na mesma pasta desta página). Depois recarregue.');
+},8000);
+</script>
+<script type="module">
+import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js';
+import { getFirestore, collection, doc, onSnapshot, addDoc, updateDoc, deleteDoc, setDoc, increment } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js';
+
+const WA_KEY='nayane_whatsapp_v1';
+const fmtPreco=v=>new Intl.NumberFormat('pt-BR',{style:'currency',currency:'BRL'}).format(v);
+const esc=s=>String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+
+let db=null;
+let remoteList=[];      // produtos vindos do Firestore (atualiza em tempo real)
+let editingId=null;
+let imgData='';
+
+try{
+  if(!window.FIREBASE_CONFIG)throw new Error('O arquivo firebase-config.js não está no site. Publique/envie esse arquivo junto com as outras páginas e recarregue.');
+  const app=initializeApp(window.FIREBASE_CONFIG);
+  db=getFirestore(app);
+  onSnapshot(collection(db,'produtos'),snap=>{
+    remoteList=snap.docs.map(d=>({id:d.id,...d.data()}));
+    renderList();
+    if(window.hideFBError)window.hideFBError();
+  },err=>{
+    console.error('Firestore:',err);
+    if(window.showFBError)window.showFBError('Não conectei ao banco: '+err.message+'. Se as regras abertas já estão publicadas no Firebase, apenas recarregue a página.');
+  });
+  onSnapshot(doc(db,'config','loja'),s=>{
+    if(s.exists()&&s.data().whatsapp){waInput.value=String(s.data().whatsapp).replace(/\D/g,'');}
+  },()=>{});
+}catch(err){
+  console.error('Firebase init:',err);
+  if(window.showFBError)window.showFBError(err.message||'Firebase não carregou. Recarregue a página.');
+}
+
+function getWA(){
+  return ((document.getElementById('waInput').value||localStorage.getItem(WA_KEY)||(typeof CATALOGO!=='undefined'?CATALOGO.whatsapp:'')||'5588996281302').replace(/\D/g,''));
+}
+
+// ----- WhatsApp -----
+const waInput=document.getElementById('waInput');
+waInput.value=getWA();
+document.getElementById('saveWa').addEventListener('click',async()=>{
+  const v=waInput.value.replace(/\D/g,'');
+  if(v.length<10){showToast('Informe um número válido (55 + DDD + número).',true);return;}
+  localStorage.setItem(WA_KEY,v);
+  waInput.value=v;
+  try{
+    if(db)await setDoc(doc(db,'config','loja'),{whatsapp:v},{merge:true});
+    showToast('Número salvo na nuvem e neste aparelho.');
+  }catch(err){
+    showToast('Salvo neste aparelho, mas falhou na nuvem: '+err.message,true);
+  }
+});
+
+// ----- Toast -----
+const toast=document.getElementById('toast');
+let toastTimer=null;
+function showToast(msg,isError){
+  toast.textContent=msg;
+  toast.style.background=isError?'#f6e3de':'#e8f0e6';
+  toast.style.color=isError?'#a24a38':'#4a6b45';
+  toast.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer=setTimeout(()=>toast.classList.remove('show'),2600);
+}
+
+// ----- Foto -----
+const pImg=document.getElementById('pImg'),imgPreview=document.getElementById('imgPreview');
+pImg.addEventListener('change',()=>{
+  const f=pImg.files&&pImg.files[0];
+  if(!f)return;
+  const reader=new FileReader();
+  reader.onload=e=>{
+    const probe=new Image();
+    probe.onload=()=>{
+      // redimensiona para no máximo 800px (lado maior) e salva em JPEG
+      const max=800;
+      let {width:w,height:h}=probe;
+      if(w>max||h>max){const r=Math.min(max/w,max/h);w=Math.round(w*r);h=Math.round(h*r);}
+      const c=document.createElement('canvas');c.width=w;c.height=h;
+      const cx=c.getContext('2d');cx.fillStyle='#fff';cx.fillRect(0,0,w,h);
+      cx.drawImage(probe,0,0,w,h);
+      imgData=c.toDataURL('image/jpeg',0.85);
+      imgPreview.innerHTML='<img alt="pré-visualização">';
+      imgPreview.querySelector('img').src=imgData;
+      pImg.value='';
+    };
+    probe.onerror=()=>showToast('Não consegui ler essa imagem.',true);
+    probe.src=e.target.result;
+  };
+  reader.readAsDataURL(f);
+});
+document.getElementById('removeImg').addEventListener('click',()=>{
+  imgData='';pImg.value='';imgPreview.innerHTML='sem<br>foto';
+});
+
+// ----- Form -----
+const form=document.getElementById('prodForm');
+form.addEventListener('submit',async e=>{
+  e.preventDefault();
+  const nome=document.getElementById('pNome').value.trim();
+  const detalhe=document.getElementById('pDetalhe').value.trim();
+  const preco=parseFloat(document.getElementById('pPreco').value.replace(',','.'));
+  const estoque=parseInt(document.getElementById('pEstoque').value,10);
+  if(!nome){showToast('Informe o nome do produto.',true);return;}
+  if(!(preco>0)){showToast('Informe um valor válido.',true);return;}
+  if(isNaN(estoque)||estoque<0){showToast('Informe o estoque (pode ser 0 = esgotado).',true);return;}
+  if(!db){showToast('Ainda não conectei ao banco. Recarregue a página.',true);return;}
+
+  const btn=document.getElementById('submitBtn');
+  btn.disabled=true;btn.textContent='Salvando…';
+  try{
+    const dados={nome,detalhe,preco:Number(preco.toFixed(2)),estoque,img:imgData||null};
+    if(editingId!=null){
+      await updateDoc(doc(db,'produtos',editingId),dados);
+      showToast('Produto atualizado para todos os clientes.');
+    }else{
+      await addDoc(collection(db,'produtos'),dados);
+      showToast('Produto publicado para todos os clientes.');
+    }
+    resetForm();
+  }catch(err){
+    console.error(err);
+    showToast('Erro ao salvar: '+err.message,true);
+  }finally{
+    btn.disabled=false;
+    btn.textContent=editingId!=null?'Atualizar produto':'Salvar produto';
+  }
+});
+
+function resetForm(){
+  form.reset();
+  editingId=null;imgData='';
+  imgPreview.innerHTML='sem<br>foto';
+  document.getElementById('formTitle').textContent='Cadastrar produto';
+  document.getElementById('submitBtn').textContent='Salvar produto';
+  document.getElementById('cancelEdit').style.display='none';
+}
+document.getElementById('cancelEdit').addEventListener('click',resetForm);
+
+function startEdit(id){
+  const p=remoteList.find(x=>String(x.id)===String(id));
+  if(!p)return;
+  editingId=id;
+  document.getElementById('pNome').value=p.nome||'';
+  document.getElementById('pDetalhe').value=p.detalhe||'';
+  document.getElementById('pPreco').value=(p.preco||0).toFixed(2);
+  document.getElementById('pEstoque').value=p.estoque??0;
+  imgData=p.img||'';
+  if(imgData){imgPreview.innerHTML='<img alt="pré-visualização">';imgPreview.querySelector('img').src=imgData;}
+  else{imgPreview.innerHTML='sem<br>foto';}
+  document.getElementById('formTitle').textContent='Editar produto';
+  document.getElementById('submitBtn').textContent='Atualizar produto';
+  document.getElementById('cancelEdit').style.display='inline-flex';
+  window.scrollTo({top:document.getElementById('formTitle').getBoundingClientRect().top+window.scrollY-90,behavior:'smooth'});
+}
+
+async function removeProduct(id){
+  if(!confirm('Remover este produto da loja?'))return;
+  try{await deleteDoc(doc(db,'produtos',id));showToast('Produto removido.');}
+  catch(err){showToast('Erro ao remover: '+err.message,true);}
+}
+
+async function markSold(id){
+  const p=remoteList.find(x=>String(x.id)===String(id));
+  if(!p||((p.estoque??0)<=0))return;
+  try{await updateDoc(doc(db,'produtos',id),{estoque:increment(-1)});}
+  catch(err){showToast('Erro ao baixar estoque: '+err.message,true);}
+}
+
+// ----- Lista -----
+const listEl=document.getElementById('prodList'),countBadge=document.getElementById('countBadge');
+const PLACEHOLDER_THUMB='data:image/svg+xml,'+encodeURIComponent("<svg xmlns='http://www.w3.org/2000/svg' width='128' height='128'><rect width='128' height='128' fill='#efe0cc'/><text x='64' y='70' font-family='Arial' font-size='10' fill='#8a7260' text-anchor='middle'>sem foto</text></svg>");
+function renderList(){
+  countBadge.textContent=remoteList.length?`(${remoteList.length})`:'';
+  if(!remoteList.length){listEl.innerHTML='<p class="empty-list">Nenhum produto cadastrado ainda.</p>';return;}
+  listEl.innerHTML=remoteList.map(p=>`
+    <div class="prod-row">
+      <img class="thumb" src="${p.img||PLACEHOLDER_THUMB}" alt="">
+      <div class="meta">
+        <b>${esc(p.nome)}</b>
+        <span>${esc(p.detalhe||'')} · ${fmtPreco(p.preco)} · estoque: ${(p.estoque??0)}${(p.estoque??0)<=0?' (esgotado)':''}</span>
+      </div>
+      <div class="acts">
+        <button type="button" class="btn btn-gold btn-sm" data-sold="${esc(p.id)}" title="Baixa o estoque em 1 unidade (use após a venda)">Vendido −1</button>
+        <button type="button" class="btn btn-ghost btn-sm" data-edit="${esc(p.id)}">Editar</button>
+        <button type="button" class="btn btn-danger btn-sm" data-del="${esc(p.id)}">Excluir</button>
+      </div>
+    </div>`).join('');
+  listEl.querySelectorAll('[data-sold]').forEach(b=>b.addEventListener('click',()=>markSold(b.getAttribute('data-sold'))));
+  listEl.querySelectorAll('[data-edit]').forEach(b=>b.addEventListener('click',()=>startEdit(b.getAttribute('data-edit'))));
+  listEl.querySelectorAll('[data-del]').forEach(b=>b.addEventListener('click',()=>removeProduct(b.getAttribute('data-del'))));
+}
+renderList();
+
+// ----- Baixar products.js -----
+document.getElementById('downloadJs').addEventListener('click',()=>{
+  const wa=getWA();
+  const items=remoteList.map(p=>`    {\n      id: ${JSON.stringify(String(p.id))},\n      nome: ${JSON.stringify(p.nome)},\n      detalhe: ${JSON.stringify(p.detalhe||'')},\n      preco: ${Number(p.preco).toFixed(2)},\n      estoque: ${Number(p.estoque)||0},\n      img: ${JSON.stringify(p.img||'')}\n    }`).join(',\n');
+  const js=`// ============================================================\n// PRODUTOS — CATALOGO NAYANE CARDOSO\n// Cópia de segurança gerada pela "Área do Lojista" em ${new Date().toLocaleDateString('pt-BR')}\n// Os produtos principais ficam no Firebase (Firestore); este arquivo serve\n// como backup/fallback. Para usar, substitua o products.js do repositório.\n// ============================================================\n\nconst CATALOGO = {\n  loja: 'Nayane Cardoso',\n  whatsapp: '${wa}',\n\n  produtos: [\n${items}\n  ]\n};\n`;
+  const blob=new Blob([js],{type:'application/javascript'});
+  const a=document.createElement('a');
+  a.href=URL.createObjectURL(blob);
+  a.download='products.js';
+  document.body.appendChild(a);a.click();
+  setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove();},500);
+  showToast('Arquivo baixado! (cópia de segurança dos produtos atuais)');
+});
+
+// ----- Apagar todos os produtos -----
+document.getElementById('clearAll').addEventListener('click',async()=>{
+  if(!db){showToast('Ainda não conectei ao banco.',true);return;}
+  if(!confirm(`Apagar TODOS os ${remoteList.length} produtos da loja?\nEssa ação não pode ser desfeita.`))return;
+  try{
+    await Promise.all(remoteList.map(p=>deleteDoc(doc(db,'produtos',p.id))));
+    showToast('Todos os produtos foram apagados.');
+  }catch(err){showToast('Erro ao apagar: '+err.message,true);}
+});
+</script>
+</body>
+</html>
