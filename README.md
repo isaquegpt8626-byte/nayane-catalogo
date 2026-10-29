@@ -47,11 +47,22 @@ Catálogo de vendas com visual igual ao site principal e botão **"Comprar pelo 
         allow read: if true;
         allow write: if auth != null;
       }
+      match /stats/visitas {
+        allow read: if true;
+        allow create, update: if request.resource.data.diff(resource.data).affectedKeys().hasOnly(['total'])
+          && (request.method == 'create' ? request.resource.data.total == 1 : request.resource.data.total == resource.data.total + 1);
+      }
     }
   }
   ```
   ⚠️ Com essas regras, **clientes leem a loja livremente**, mas só quem está logada escreve (cadastrar/editar produto, WhatsApp). Até publicar essas regras, as regras antigas abertas continuam valendo.
 - Coleção usada: `produtos` (docs com `nome`, `detalhe`, `preco`, `estoque`, `img`). Documento `config/loja` guarda o `whatsapp`.
+
+### Contador de visitas
+
+- Cada navegador que abre o site (qualquer página) conta **1 visita por sessão** em `stats/visitas` (campo `total`) — recarregar a página não soma de novo; robôs de busca também contam.
+- O total aparece no **rodapé do site principal** (ex.: "374 visitas") e atualiza em tempo real (`onSnapshot`).
+- Para zerar ou corrigir o número: console do Firebase → Firestore → coleção `stats` → documento `visitas` → editar `total`.
 
 - O link **Produtos** já está disponível no menu do site principal (`index.html`).
 

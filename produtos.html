@@ -509,5 +509,20 @@ try{
   },()=>{});
 }catch(err){console.error('Firebase init:',err);if(window.showFBError)window.showFBError(err.message||'Firebase não carregou. Recarregue a página.');}
 </script>
+
+<!-- ===== Contador de visitas (conta uma vez por sessão, mesmo documento do rodapé principal) ===== -->
+<script type="module">
+import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js';
+import { getFirestore, doc, setDoc, increment } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js';
+
+if(typeof FIREBASE_CONFIG!=='undefined'){
+  try{
+    if(!sessionStorage.getItem('vc_sessao')){
+      sessionStorage.setItem('vc_sessao','1');
+      setDoc(doc(getFirestore(initializeApp(FIREBASE_CONFIG)),'stats','visitas'),{total:increment(1)},{merge:true}).catch(()=>{});
+    }
+  }catch(e){}
+}
+</script>
 </body>
 </html>

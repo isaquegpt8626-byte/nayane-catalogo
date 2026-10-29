@@ -568,6 +568,7 @@ footer .copy{font-size:.8rem;color:rgba(233,220,201,.6);margin-top:18px}
       <a href="https://wa.me/5588996281302" target="_blank" rel="noopener" aria-label="WhatsApp" title="WhatsApp">&#128172;</a>
     </div>
     <p class="copy">Nayane Cardoso · Nail Designer · Unhas que contam histórias</p>
+    <p id="contadorVisitas" style="font-size:.78rem;color:rgba(233,220,201,.5);margin-top:10px"></p>
   </div>
 </footer>
 
@@ -652,6 +653,29 @@ document.querySelectorAll('[data-book]').forEach(form=>{
     window.open(`https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(msg)}`,'_blank','noopener');
   });
 });
+</script>
+
+<!-- ===== Contador de visitas (uma contagem por sessão de navegador, no próprio Firebase do site) ===== -->
+<script src="firebase-config.js"></script>
+<script type="module">
+import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js';
+import { getFirestore, doc, setDoc, onSnapshot, increment } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js';
+
+const cv=document.getElementById('contadorVisitas');
+if(cv&&typeof FIREBASE_CONFIG!=='undefined'){
+  try{
+    const ref=doc(getFirestore(initializeApp(FIREBASE_CONFIG)),'stats','visitas');
+    // conta uma vez por sessão (recarregar não soma de novo; chave compartilhada com produtos.html)
+    try{
+      if(!sessionStorage.getItem('vc_sessao')){sessionStorage.setItem('vc_sessao','1');setDoc(ref,{total:increment(1)},{merge:true}).catch(()=>{});}
+    }catch(e){}
+    cv._un=onSnapshot(ref,s=>{
+      const t=s.exists()?(s.data().total||0):0;
+      if(t>0)cv.textContent=t+(t===1?' visita':' visitas');
+    },()=>{});
+  }catch(e){}
+}
+window.addEventListener('beforeunload',()=>{try{cv._un&&cv._un();}catch(e){}});
 </script>
 </body>
 </html>
